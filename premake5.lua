@@ -3,27 +3,36 @@ project "GLFW"
 	language "C"
 	staticruntime "off"
 
-	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+	targetdir "%{wks.location}/build/bin"
+	objdir "%{wks.location}/build/bin-int/%{prj.name}"
 
-	files
-	{
-		"include/GLFW/glfw3.h",
-		"include/GLFW/glfw3native.h",
-		"src/glfw_config.h",
-		"src/context.c",
-		"src/init.c",
-		"src/input.c",
-		"src/monitor.c",
+	includedirs {
+		"%{prj.location}/include",
+		"%{prj.location}/include/GLFW",
+	}
 
-		"src/null_init.c",
-		"src/null_joystick.c",
-		"src/null_monitor.c",
-		"src/null_window.c",
-
-		"src/platform.c",
-		"src/vulkan.c",
-		"src/window.c",
+	files {
+		"%{prj.location}/include/GLFW/glfw3.h",
+		"%{prj.location}/include/GLFW/glfw3native.h",
+		"%{prj.location}/src/internal.h",
+		"%{prj.location}/src/platform.h",
+		"%{prj.location}/src/mappings.h",
+		"%{prj.location}/src/context.c",
+		"%{prj.location}/src/init.c",
+		"%{prj.location}/src/input.c",
+		"%{prj.location}/src/monitor.c",
+		"%{prj.location}/src/platform.c",
+		"%{prj.location}/src/vulkan.c",
+		"%{prj.location}/src/window.c",
+		"%{prj.location}/src/egl_context.c",
+		"%{prj.location}/src/osmesa_context.c",
+		"%{prj.location}/src/null_platform.h",
+		"%{prj.location}/src/null_joystick.h",
+		"%{prj.location}/src/null_init.c",
+	
+		"%{prj.location}/src/null_monitor.c",
+		"%{prj.location}/src/null_window.c",
+		"%{prj.location}/src/null_joystick.c",
 	}
 
 	filter "system:linux"
@@ -31,27 +40,26 @@ project "GLFW"
 
 		systemversion "latest"
 		
-		files
-		{
-			"src/x11_init.c",
-			"src/x11_monitor.c",
-			"src/x11_window.c",
-			"src/xkb_unicode.c",
-			"src/posix_time.c",
-			"src/posix_thread.c",
-			"src/glx_context.c",
-			"src/egl_context.c",
-			"src/osmesa_context.c",
-			"src/linux_joystick.c"
+		files {
+			"%{prj.location}/src/x11_init.c",
+			"%{prj.location}/src/x11_monitor.c",
+			"%{prj.location}/src/x11_window.c",
+			"%{prj.location}/src/xkb_unicode.c",
+			"%{prj.location}/src/posix_time.c",
+			"%{prj.location}/src/posix_thread.c",
+			"%{prj.location}/src/posix_module.c",
+			"%{prj.location}/src/posix_poll.c",
+			"%{prj.location}/src/glx_context.c",
+			"%{prj.location}/src/egl_context.c",
+			"%{prj.location}/src/osmesa_context.c",
+			"%{prj.location}/src/linux_joystick.c"
 		}
 
-		defines
-		{
+		defines {
 			"_GLFW_X11"
 		}
 
-        links 
-        {
+        links {
             "X11",
             "m"
         }
@@ -59,28 +67,25 @@ project "GLFW"
 	filter "system:windows"
 		systemversion "latest"
 
-		files
-		{
-			"src/win32_init.c",
-			"src/win32_joystick.c",
-			"src/win32_module.c",
-			"src/win32_monitor.c",
-			"src/win32_time.c",
-			"src/win32_thread.c",
-			"src/win32_window.c",
-			"src/wgl_context.c",
-			"src/egl_context.c",
-			"src/osmesa_context.c"
+		files {
+			"%{prj.location}/src/win32_init.c",
+			"%{prj.location}/src/win32_joystick.c",
+			"%{prj.location}/src/win32_module.c",
+			"%{prj.location}/src/win32_monitor.c",
+			"%{prj.location}/src/win32_time.c",
+			"%{prj.location}/src/win32_thread.c",
+			"%{prj.location}/src/win32_window.c",
+			"%{prj.location}/src/wgl_context.c",
+			"%{prj.location}/src/egl_context.c",
+			"%{prj.location}/src/osmesa_context.c"
 		}
 
-		defines 
-		{ 
+		defines  {
 			"_GLFW_WIN32",
 			"_CRT_SECURE_NO_WARNINGS"
 		}
 
-		links
-		{
+		links {
 			"Dwmapi"
 		}
 
